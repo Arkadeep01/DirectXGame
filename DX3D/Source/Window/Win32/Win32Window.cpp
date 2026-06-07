@@ -17,7 +17,7 @@ static LRESULT CALLBACK WindowProcedure(HWND hwnd, UINT uMsg, WPARAM wParam, LPA
 }
 
 
-DX3D::Window::Window() : Base()
+DX3D::Window::Window(const WindowDesc& desc) : Base(desc.base)
 {
 	auto registerWindowClassFunction = []()
 		{
@@ -34,6 +34,7 @@ DX3D::Window::Window() : Base()
 	auto windowClassId = registerWindowClassFunction();
 	if (!windowClassId)
 	{
+		getLogger().log(Logger::LogLevel::Error, "RegisterClassEx Failed.");
 		throw std::runtime_error("Failed to register window class");
 		MessageBox(NULL, L"Failed to register window class", L"Error", MB_ICONERROR);
 		return;
@@ -42,12 +43,13 @@ DX3D::Window::Window() : Base()
 	RECT rc{ 0, 0, 1280, 720 };
 	AdjustWindowRect(&rc, WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU, FALSE);
 
-	m_handle = CreateWindowEx(0, MAKEINTATOM(windowClassId), L"Vexel | C++ 3D Game Engine",
+	m_handle = CreateWindowEx(0, MAKEINTATOM(windowClassId), L"Vertex Horizon | C++ 3D Game Engine",
 		WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU, CW_USEDEFAULT, CW_USEDEFAULT,
 		rc.right - rc.left, rc.bottom - rc.top, NULL, NULL, GetModuleHandle(NULL), NULL);
 
 	if (!m_handle)
 	{
+		getLogger().log(Logger::LogLevel::Error, "CreateWindowEx Failed.");
 		throw std::runtime_error("Failed to create window");
 		MessageBox(NULL, L"Failed to create window", L"Error", MB_ICONERROR);
 		return;

@@ -4,7 +4,7 @@ int main()
 {
 	try
 	{
-		DX3D::Gaming game;
+		DX3D::Gaming game({ DX3D::Logger::LogLevel::Info });
 		game.run();
 	}
 	catch (const std::runtime_error&)
