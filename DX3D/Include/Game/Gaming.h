@@ -22,7 +22,7 @@ namespace DX3D
 		std::unique_ptr<GraphicsEngine> m_graphicsEngine{};
 
 		// This function keeps the game window into the Gaming Loop.
-		std::unique_ptr<Window> m_display{};
+		std::unique_ptr<Display> m_display{};
 		bool GameisRunning{ true };
 	};
 }

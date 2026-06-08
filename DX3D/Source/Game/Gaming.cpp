@@ -2,6 +2,7 @@
 #include <Windows.h>
 #include <Graphics/GraphicsEngine.h>
 #include <Core/Logger.h>
+#include <Game/Display.h>
 
 DX3D::Gaming::Gaming(const GameDesc& desc) :
 	Base({*std::make_unique<Logger>(desc.logLevel ).release()}),
@@ -9,12 +10,12 @@ DX3D::Gaming::Gaming(const GameDesc& desc) :
 {
 	// Logger is the First Attribute
 	m_graphicsEngine = std::make_unique<GraphicsEngine>(GraphicsEngineDesc{ BaseDesc{m_logger} });
-	m_display = std::make_unique<Window>(WindowDesc{BaseDesc{m_logger}});
+	m_display = std::make_unique<Display>(DisplayDesc{ {m_logger, desc.windowSize}, m_graphicsEngine->getRenderSystem() });
 
-	m_loggerPtr->log(Logger::LogLevel::Info, "Game Initiated...");
+	DX3DLogInfo("Game Initiated...");
 }
 
 DX3D::Gaming::~Gaming()
 {
-	m_loggerPtr->log(Logger::LogLevel::Info, "Game Deallocation Started...");
+	DX3DLogInfo("Game Deallocation Started...");
 }

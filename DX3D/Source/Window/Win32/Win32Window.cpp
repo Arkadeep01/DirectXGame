@@ -1,3 +1,5 @@
+#define UNICODE
+#define _UNICODE
 #include <Window/Window.h>
 #include <Windows.h>
 #include <stdexcept>
@@ -17,7 +19,7 @@ static LRESULT CALLBACK WindowProcedure(HWND hwnd, UINT uMsg, WPARAM wParam, LPA
 }
 
 
-DX3D::Window::Window(const WindowDesc& desc) : Base(desc.base)
+DX3D::Window::Window(const WindowDesc& desc) : Base(desc.base), m_size(desc.size)
 {
 	auto registerWindowClassFunction = []()
 		{
@@ -33,14 +35,9 @@ DX3D::Window::Window(const WindowDesc& desc) : Base(desc.base)
 
 	auto windowClassId = registerWindowClassFunction();
 	if (!windowClassId)
-	{
-		getLogger().log(Logger::LogLevel::Error, "RegisterClassEx Failed.");
-		throw std::runtime_error("Failed to register window class");
-		MessageBox(NULL, L"Failed to register window class", L"Error", MB_ICONERROR);
-		return;
-	}
+		DX3DLogErrorAndThrow("Failed to register window class");
 
-	RECT rc{ 0, 0, 1280, 720 };
+	RECT rc{ 0, 0, m_size.width, m_size.height};
 	AdjustWindowRect(&rc, WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU, FALSE);
 
 	m_handle = CreateWindowEx(0, MAKEINTATOM(windowClassId), L"Vertex Horizon | C++ 3D Game Engine",
@@ -48,17 +45,12 @@ DX3D::Window::Window(const WindowDesc& desc) : Base(desc.base)
 		rc.right - rc.left, rc.bottom - rc.top, NULL, NULL, GetModuleHandle(NULL), NULL);
 
 	if (!m_handle)
-	{
-		getLogger().log(Logger::LogLevel::Error, "CreateWindowEx Failed.");
-		throw std::runtime_error("Failed to create window");
-		MessageBox(NULL, L"Failed to create window", L"Error", MB_ICONERROR);
-		return;
-	};
+		DX3DLogErrorAndThrow("CreateWindowEx Failed.");
 
 	ShowWindow(m_handle, SW_SHOW);
 }
 
 DX3D::Window::~Window()
 {
-	DestroyWindow(static_cast<HWND>(m_handle));
+	DestroyWindow(m_handle);
 }

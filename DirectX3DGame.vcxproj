@@ -116,7 +116,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;NOMINMAX</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -137,7 +137,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;NOMINMAX</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -153,6 +153,7 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DX3D\Source\Game\Display.cpp" />
     <ClCompile Include="DX3D\Source\Core\Base.cpp" />
     <ClCompile Include="DX3D\Source\Game\Win32\Win32Game.cpp" />
     <ClCompile Include="Game\main.cpp" />
@@ -161,17 +162,23 @@
     <ClCompile Include="DX3D\Source\Graphics\RenderSystem.cpp" />
     <ClCompile Include="DX3D\Source\Graphics\GraphicsEngine.cpp" />
     <ClCompile Include="DX3D\Source\Core\Logger.cpp" />
+    <ClCompile Include="DX3D\Source\Graphics\SwapChain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DX3D\Include\Game\Display.h" />
     <ClInclude Include="DX3D\Include\All.h" />
     <ClInclude Include="DX3D\Include\Core\Base.h" />
     <ClInclude Include="DX3D\Include\Core\Common.h" />
     <ClInclude Include="DX3D\Include\Core\Core.h" />
     <ClInclude Include="DX3D\Include\Game\Gaming.h" />
+    <ClInclude Include="DX3D\Include\Math\Rect.h" />
     <ClInclude Include="DX3D\Include\Window\Window.h" />
     <ClInclude Include="DX3D\Include\Graphics\GraphicsEngine.h" />
+    <ClInclude Include="DX3D\Source\Graphics\GraphicsLogUtils.h" />
+    <ClInclude Include="DX3D\Source\Graphics\GraphicsResource.h" />
     <ClInclude Include="DX3D\Source\Graphics\RenderSystem.h" />
     <ClInclude Include="DX3D\Include\Core\Logger.h" />
+    <ClInclude Include="DX3D\Source\Graphics\SwapChain.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
